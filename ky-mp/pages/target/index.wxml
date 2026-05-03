@@ -1,0 +1,280 @@
+<view class="container">
+  <!-- 进度条 -->
+  <view class="progress-bar">
+    <view class="step {{step >= 1 ? 'active' : ''}}">
+      <view class="step-num">1</view>
+      <text class="step-text">选择学校</text>
+    </view>
+    <view class="step-line {{step > 1 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 2 ? 'active' : ''}}">
+      <view class="step-num">2</view>
+      <text class="step-text">选择学院</text>
+    </view>
+    <view class="step-line {{step > 2 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 3 ? 'active' : ''}}">
+      <view class="step-num">3</view>
+      <text class="step-text">选择专业</text>
+    </view>
+    <view class="step-line {{step > 3 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 4 ? 'active' : ''}}">
+      <view class="step-num">4</view>
+      <text class="step-text">选择方向</text>
+    </view>
+    <view class="step-line {{step > 4 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 5 ? 'active' : ''}}">
+      <view class="step-num">5</view>
+      <text class="step-text">确认目标</text>
+    </view>
+  </view>
+
+  <!-- 学校选择 -->
+  <view class="section" wx:if="{{step === 1}}">
+    <view class="section-title">
+      <text>选择目标院校</text>
+      <text class="subtitle">点击卡片选择</text>
+    </view>
+    
+    <!-- 搜索框 -->
+    <view class="search-box">
+      <input 
+        class="search-input" 
+        placeholder="搜索学校名称..." 
+        bindinput="onSearchSchool"
+        value="{{searchKeyword}}"
+      />
+    </view>
+    
+    <view class="school-list">
+      <view 
+        class="school-card {{selectedSchool.id === item.id ? 'selected' : ''}}"
+        wx:for="{{schoolList}}"
+        wx:key="id"
+        bindtap="selectSchool"
+        data-school="{{item}}"
+      >
+        <view class="school-info">
+          <view class="school-name">{{item.name}}</view>
+          <view class="school-meta">
+            <text class="school-code">{{item.code}}</text>
+            <text class="school-location">{{item.province}} · {{item.city}}</text>
+          </view>
+        </view>
+        <view class="school-rank {{item.rank}}">{{item.rank}}</view>
+        <view class="check-icon" wx:if="{{selectedSchool.id === item.id}}">✓</view>
+      </view>
+      
+      <view class="loading" wx:if="{{loading}}">
+        <text>加载中...</text>
+      </view>
+      
+      <view class="empty" wx:if="{{!loading && schoolList.length === 0}}">
+        <text>暂无学校数据</text>
+      </view>
+    </view>
+    
+    <view class="bottom-btn">
+      <button 
+        class="btn-primary {{selectedSchool.id ? '' : 'disabled'}}" 
+        bindtap="nextStep"
+        disabled="{{!selectedSchool.id}}"
+      >下一步</button>
+    </view>
+  </view>
+
+  <!-- 学院选择 -->
+  <view class="section" wx:if="{{step === 2}}">
+    <view class="section-title">
+      <text class="selected-info">已选：{{selectedSchool.name}}</text>
+      <text class="subtitle">选择学院</text>
+    </view>
+    
+    <view class="institute-list">
+      <view 
+        class="institute-card {{selectedInstitute.id === item.id ? 'selected' : ''}}"
+        wx:for="{{instituteList}}"
+        wx:key="id"
+        bindtap="selectInstitute"
+        data-institute="{{item}}"
+      >
+        <view class="institute-name">{{item.name}}</view>
+        <view class="check-icon" wx:if="{{selectedInstitute.id === item.id}}">✓</view>
+      </view>
+      
+      <view class="loading" wx:if="{{loading}}">
+        <text>加载中...</text>
+      </view>
+      
+      <view class="empty" wx:if="{{!loading && instituteList.length === 0}}">
+        <text>该学校暂无学院数据</text>
+      </view>
+    </view>
+    
+    <view class="bottom-btns">
+      <button class="btn-default" bindtap="prevStep">上一步</button>
+      <button 
+        class="btn-primary {{selectedInstitute.id ? '' : 'disabled'}}" 
+        bindtap="nextStep"
+        disabled="{{!selectedInstitute.id}}"
+      >下一步</button>
+    </view>
+  </view>
+
+  <!-- 专业选择 -->
+  <view class="section" wx:if="{{step === 3}}">
+    <view class="section-title">
+      <text class="selected-info">已选：{{selectedInstitute.name}}</text>
+      <text class="subtitle">选择专业</text>
+    </view>
+    
+    <!-- 学位类型筛选 -->
+    <view class="filter-tabs">
+      <view 
+        class="filter-tab {{degreeType === '学术型' ? 'active' : ''}}"
+        bindtap="switchDegree"
+        data-type="学术型"
+      >学术型</view>
+      <view 
+        class="filter-tab {{degreeType === '专业型' ? 'active' : ''}}"
+        bindtap="switchDegree"
+        data-type="专业型"
+      >专业型</view>
+    </view>
+    
+    <view class="major-list">
+      <view 
+        class="major-card {{selectedMajor.id === item.id ? 'selected' : ''}}"
+        wx:for="{{majorList}}"
+        wx:key="id"
+        bindtap="selectMajor"
+        data-major="{{item}}"
+      >
+        <view class="major-header">
+          <view class="major-name">{{item.name}}</view>
+          <view class="major-degree {{item.degree === '学术型' ? 'academic' : 'professional'}}">
+            {{item.degree}}
+          </view>
+        </view>
+        <view class="major-meta">
+          <text class="major-code">{{item.code}}</text>
+          <text class="major-enroll">招生 {{item.enrollment_count || 0}} 人</text>
+        </view>
+        <view class="check-icon" wx:if="{{selectedMajor.id === item.id}}">✓</view>
+      </view>
+      
+      <view class="loading" wx:if="{{loading}}">
+        <text>加载中...</text>
+      </view>
+      
+      <view class="empty" wx:if="{{!loading && majorList.length === 0}}">
+        <text>该学院暂无相关专业</text>
+      </view>
+    </view>
+    
+    <view class="bottom-btns">
+      <button class="btn-default" bindtap="prevStep">上一步</button>
+      <button 
+        class="btn-primary {{selectedMajor.id ? '' : 'disabled'}}" 
+        bindtap="nextStep"
+        disabled="{{!selectedMajor.id}}"
+      >下一步</button>
+    </view>
+  </view>
+
+  <!-- 方向选择 -->
+  <view class="section" wx:if="{{step === 4}}">
+    <view class="section-title">
+      <text class="selected-info">已选：{{selectedMajor.name}}</text>
+      <text class="subtitle">选择研究方向</text>
+    </view>
+    
+    <view class="direction-tip" wx:if="{{directionList.length === 0 && !loading}}">
+      <text>该专业暂无研究方向，可直接跳过此步</text>
+    </view>
+    
+    <view class="direction-tip single" wx:if="{{directionList.length === 1 && !loading}}">
+      <text>不区分研究方向，已自动选择</text>
+    </view>
+    
+    <view class="direction-list">
+      <view 
+        class="direction-card {{selectedDirection.id === item.id ? 'selected' : ''}}"
+        wx:for="{{directionList}}"
+        wx:key="id"
+        bindtap="selectDirection"
+        data-direction="{{item}}"
+      >
+        <view class="direction-header">
+          <view class="direction-code">{{item.code}}</view>
+          <view class="direction-name">{{item.name}}</view>
+        </view>
+        <view class="check-icon" wx:if="{{selectedDirection.id === item.id}}">✓</view>
+      </view>
+      
+      <view class="loading" wx:if="{{loading}}">
+        <text>加载中...</text>
+      </view>
+    </view>
+    
+    <view class="bottom-btns">
+      <button class="btn-default" bindtap="prevStep">上一步</button>
+      <button 
+        class="btn-primary" 
+        bindtap="nextStep"
+      >{{directionList.length > 1 && !selectedDirection ? '跳过' : '下一步'}}</button>
+    </view>
+  </view>
+
+  <!-- 确认目标 -->
+  <view class="section" wx:if="{{step === 5}}">
+    <view class="section-title">
+      <text>确认考研目标</text>
+      <text class="subtitle">确认后即可开始刷题</text>
+    </view>
+    
+    <view class="target-summary">
+      <view class="summary-item">
+        <view class="summary-label">目标院校</view>
+        <view class="summary-value school">{{selectedSchool.name}}</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-label">目标学院</view>
+        <view class="summary-value">{{selectedInstitute.name}}</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-label">目标专业</view>
+        <view class="summary-value">{{selectedMajor.name}}</view>
+      </view>
+      <view class="summary-item" wx:if="{{selectedDirection}}">
+        <view class="summary-label">研究方向</view>
+        <view class="summary-value direction">{{selectedDirection.name}}</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-label">学位类型</view>
+        <view class="summary-value">{{selectedMajor.degree}}</view>
+      </view>
+    </view>
+    
+    <view class="subject-preview" wx:if="{{subjects.length > 0}}">
+      <view class="subject-title">考试科目</view>
+      <view class="subject-list">
+        <view class="subject-item" wx:for="{{subjects}}" wx:key="id">
+          <view class="subject-order">{{item.order || item.exam_order}}</view>
+          <view class="subject-info">
+            <view class="subject-name">{{item.name}}</view>
+            <view class="subject-code" wx:if="{{item.code}}">{{item.code}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="subject-preview empty-subjects" wx:if="{{subjects.length === 0 && !loading}}">
+      <view class="subject-title">考试科目</view>
+      <view class="empty-subject-tip">暂无科目信息</view>
+    </view>
+    
+    <view class="bottom-btns">
+      <button class="btn-default" bindtap="prevStep">上一步</button>
+      <button class="btn-primary" bindtap="confirmTarget">确认目标</button>
+    </view>
+  </view>
+</view>

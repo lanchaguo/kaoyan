@@ -1,0 +1,515 @@
+.container {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding-bottom: 120rpx;
+}
+
+/* 进度条 */
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30rpx 40rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #eee;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-num {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: #ddd;
+  color: #fff;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8rpx;
+}
+
+.step.active .step-num {
+  background: #1a1a2e;
+}
+
+.step-text {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.step.active .step-text {
+  color: #1a1a2e;
+}
+
+.step-line {
+  width: 60rpx;
+  height: 4rpx;
+  background: #ddd;
+  margin: 0 10rpx;
+  margin-bottom: 30rpx;
+}
+
+.step-line.active {
+  background: #1a1a2e;
+}
+
+/* 标题区域 */
+.section {
+  padding: 30rpx;
+}
+
+.section-title {
+  margin-bottom: 30rpx;
+}
+
+.section-title text:first-child {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+.selected-info {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+/* 搜索框 */
+.search-box {
+  margin-bottom: 30rpx;
+}
+
+.search-input {
+  background: #fff;
+  border-radius: 40rpx;
+  padding: 20rpx 30rpx;
+  font-size: 28rpx;
+}
+
+/* 学校列表 */
+.school-list {
+  margin-bottom: 120rpx;
+}
+
+.school-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  position: relative;
+  border: 2rpx solid transparent;
+}
+
+.school-card.selected {
+  border-color: #1a1a2e;
+  background: #f8f8ff;
+}
+
+.school-info {
+  flex: 1;
+}
+
+.school-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.school-meta {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.school-code {
+  font-size: 24rpx;
+  color: #666;
+  background: #f0f0f0;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+}
+
+.school-location {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.school-rank {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 6rpx;
+  color: #fff;
+  background: #409EFF;
+  margin-right: 60rpx;
+}
+
+.school-rank._985 {
+  background: linear-gradient(135deg, #c9a227, #f0d78c);
+}
+
+.school-rank._211 {
+  background: linear-gradient(135deg, #1a73e8, #7db8f7);
+}
+
+.check-icon {
+  position: absolute;
+  right: 30rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: #1a1a2e;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+}
+
+/* 学院列表 */
+.institute-list {
+  margin-bottom: 120rpx;
+}
+
+.institute-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2rpx solid transparent;
+}
+
+.institute-card.selected {
+  border-color: #1a1a2e;
+  background: #f8f8ff;
+}
+
+.institute-name {
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 学位类型筛选 */
+.filter-tabs {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.filter-tab {
+  padding: 16rpx 40rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.filter-tab.active {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+/* 专业列表 */
+.major-list {
+  margin-bottom: 120rpx;
+}
+
+.major-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+  border: 2rpx solid transparent;
+}
+
+.major-card.selected {
+  border-color: #1a1a2e;
+  background: #f8f8ff;
+}
+
+.major-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.major-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
+
+.major-degree {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 6rpx;
+}
+
+.major-degree.academic {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.major-degree.professional {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.major-meta {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.major-code {
+  font-size: 24rpx;
+  color: #666;
+  background: #f5f5f5;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+}
+
+.major-enroll {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 方向列表 */
+.direction-list {
+  margin-bottom: 120rpx;
+}
+
+.direction-tip {
+  text-align: center;
+  padding: 30rpx;
+  color: #fa8c16;
+  font-size: 26rpx;
+  background: #fff7e6;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.direction-tip.single {
+  color: #52c41a;
+  background: #f6ffed;
+}
+
+.direction-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  border: 2rpx solid transparent;
+}
+
+.direction-card.selected {
+  border-color: #1a1a2e;
+  background: #f8f8ff;
+}
+
+.direction-header {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  flex: 1;
+}
+
+.direction-code {
+  font-size: 24rpx;
+  color: #666;
+  background: #f5f5f5;
+  padding: 6rpx 16rpx;
+  border-radius: 6rpx;
+}
+
+.direction-name {
+  font-size: 28rpx;
+  color: #333;
+  flex: 1;
+}
+
+/* 目标汇总 */
+.target-summary {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-label {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.summary-value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.summary-value.school {
+  color: #1a1a2e;
+  font-weight: bold;
+}
+
+.summary-value.direction {
+  color: #fa8c16;
+}
+
+/* 科目预览 */
+.subject-preview {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.subject-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.subject-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.subject-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.subject-order {
+  width: 40rpx;
+  height: 40rpx;
+  background: #1a1a2e;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subject-name {
+  font-size: 26rpx;
+  color: #333;
+  flex: 1;
+}
+
+.subject-range {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.subject-code {
+  font-size: 22rpx;
+  color: #999;
+  background: #f5f5f5;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+}
+
+.empty-subjects {
+  background: #fff;
+}
+
+.empty-subject-tip {
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+  padding: 30rpx 0;
+}
+
+/* 按钮 */
+.bottom-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 30rpx;
+  background: #fff;
+  box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.bottom-btns {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 30rpx;
+  background: #fff;
+  box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.05);
+  display: flex;
+  gap: 20rpx;
+}
+
+.btn-primary {
+  background: #1a1a2e;
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  padding: 24rpx 0;
+  margin: 0;
+}
+
+.btn-primary.disabled {
+  background: #ccc;
+}
+
+.btn-default {
+  background: #fff;
+  color: #666;
+  border: 2rpx solid #ddd;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  padding: 24rpx 0;
+}
+
+/* 加载和空状态 */
+.loading, .empty {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 26rpx;
+}

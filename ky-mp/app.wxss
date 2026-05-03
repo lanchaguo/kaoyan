@@ -1,0 +1,48 @@
+/* 全局样式 */
+page {
+  background: #f5f7fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+}
+
+/* 通用卡片 */
+.card {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  margin: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,.08);
+}
+
+/* 通用标题行 */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20rpx 16rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #303133;
+}
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  border-radius: 100rpx;
+  font-size: 22rpx;
+}
+.tag-success { background: #f0f9eb; color: #67c23a; }
+.tag-danger  { background: #fef0f0; color: #f56c6c; }
+.tag-warning { background: #fdf6ec; color: #e6a23c; }
+.tag-primary { background: #ecf5ff; color: #409eff; }
+.tag-info    { background: #f4f4f5; color: #909399; }
+
+/* 操作按钮行 */
+.action-bar {
+  display: flex;
+  gap: 16rpx;
+  padding: 16rpx 20rpx;
+}

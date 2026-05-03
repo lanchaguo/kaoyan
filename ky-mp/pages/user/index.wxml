@@ -1,0 +1,34 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="avatar-wrap">
+      <image class="avatar" src="{{userInfo.avatar}}" mode="aspectFill"/>
+    </view>
+    <view class="user-info">
+      <view class="nickname">{{userInfo.nickname}}</view>
+      <view class="school">{{userInfo.school}} · {{userInfo.major}}</view>
+    </view>
+  </view>
+
+  <!-- 统计 -->
+  <view class="stats">
+    <view class="stat-item" wx:for="{{stats}}" wx:key="label">
+      <view class="stat-value">{{item.value}}</view>
+      <view class="stat-label">{{item.label}}</view>
+    </view>
+  </view>
+
+  <!-- 菜单列表 -->
+  <view class="menu-list">
+    <view class="menu-item" wx:for="{{menuList}}" wx:key="id">
+      <view class="menu-left">
+        <text class="menu-icon">{{item.icon}}</text>
+        <text class="menu-title">{{item.title}}</text>
+      </view>
+      <text class="menu-arrow" wx:if="{{item.arrow}}">›</text>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version">考研管理 v1.0.0</view>
+</view>

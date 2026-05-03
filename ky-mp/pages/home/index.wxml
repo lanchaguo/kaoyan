@@ -1,0 +1,87 @@
+<view class="container">
+  <!-- 目标信息栏 -->
+  <view class="target-bar" bindtap="goToTarget">
+    <view class="target-info">
+      <text class="target-label">目标</text>
+      <text class="target-school">{{userTarget.school.name}}</text>
+      <text class="target-major">{{userTarget.major.name}}</text>
+    </view>
+    <text class="target-arrow">></text>
+  </view>
+
+  <!-- 轮播图 -->
+  <swiper class="banner" indicator-dots autoplay circular indicator-active-color="#1a1a2e">
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image mode="aspectFill" src="{{item.image}}" class="banner-img"/>
+      <view class="banner-title">{{item.title}}</view>
+    </swiper-item>
+  </swiper>
+
+  <!-- 考试科目标题 -->
+  <view class="subject-header" wx:if="{{subjects.length > 0}}">
+    <text class="subject-header-title">考试科目</text>
+    <text class="subject-header-tip">点击切换科目</text>
+  </view>
+
+  <!-- 学科切换 -->
+  <view class="subject-tabs" wx:if="{{subjects.length > 0}}">
+    <scroll-view scroll-x class="tabs-scroll">
+      <view 
+        class="tab-item {{currentSubject.id === item.id ? 'active' : ''}}" 
+        wx:for="{{subjects}}" 
+        wx:key="id"
+        data-subject="{{item}}"
+        bindtap="switchSubject"
+        style="--active-color: {{item.color}}"
+      >
+        <view class="tab-icon" style="background: {{item.color || '#409EFF'}}">{{item.code || item.name.substr(0,1)}}</view>
+        <view class="tab-name">{{item.name}}</view>
+        <!-- 选中角标 -->
+        <view class="tab-check" wx:if="{{currentSubject.id === item.id}}">✓</view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 题目列表 -->
+  <view class="section">
+    <view class="section-title">
+      <text>{{currentSubject ? currentSubject.name : '请选择学科'}}</text>
+      <text class="subtitle">真题练习</text>
+    </view>
+    
+    <view class="question-list" wx:if="{{questions.length > 0}}">
+      <view class="question-item" wx:for="{{questions}}" wx:key="id">
+        <view class="question-header">
+          <view class="question-type">{{item.type ? item.type.name : '题目'}}</view>
+          <view class="question-diff" wx:if="{{item.difficulty}}" style="color: {{item.difficulty.color}}">
+            {{item.difficulty.name}}
+          </view>
+        </view>
+        <view class="question-stem">
+          <!-- 优先级：前端渲染 > 后端SVG > 原始文本 -->
+          <rich-text wx:if="{{item.stem_rendered}}" nodes="{{item.stem_rendered}}"></rich-text>
+          <rich-text wx:elif="{{item.stem_svg}}" nodes="{{item.stem_svg}}"></rich-text>
+          <rich-text wx:else nodes="{{item.stem}}"></rich-text>
+        </view>
+        <view class="question-footer">
+          <text class="question-source">{{item.year}}年真题</text>
+          <text class="question-rate" wx:if="{{item.correct_rate}}">正确率 {{item.correct_rate}}%</text>
+        </view>
+      </view>
+      
+      <view class="load-more" wx:if="{{hasMore}}">
+        <text wx:if="{{loading}}">加载中...</text>
+        <text wx:else bindtap="onReachBottom">加载更多</text>
+      </view>
+      <view class="no-more" wx:if="{{!hasMore && questions.length > 0}}">— 没有更多了 —</view>
+    </view>
+    
+    <view class="empty" wx:if="{{subjects.length > 0 && questions.length === 0 && !loading}}">
+      <text>该学科暂无题目</text>
+    </view>
+    
+    <view class="empty" wx:if="{{subjects.length === 0 && !loading}}">
+      <text>请先设置考研目标</text>
+    </view>
+  </view>
+</view>
